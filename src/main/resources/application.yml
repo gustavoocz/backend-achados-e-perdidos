@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: b5bbbuxwfp7oi4fifmra-mysql.services.clever-cloud.com:3306/b5bbbuxwfp7oi4fifmra?useTimezone=true&serverTimezone=UTC
-    username: udipumpybj3yp5x0 
-    password: UTj09FBeV07RICRp1Eqg 
+    url: jdbc:mysql://mysql-bdtcc.alwaysdata.net:3306/bdtcc_achadoseperdidos
+    username: bdtcc 
+    password: _VRwe3r2S.yBEki 
   jpa:
     open-in-view: false
     hibernate:
