@@ -1,5 +1,7 @@
 package com.sesi.achadoseperdidos.models;
 
+import java.time.LocalDate;
+
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -22,6 +24,7 @@ public class Item {
 		ELETRÔNICO,
 		ACESSÓRIO,
 		LIVRO,
+		GARRAFA,
 		OUTROS
 	}
 	
@@ -32,7 +35,11 @@ public class Item {
 		VERDE,
 		PRETO,
 		ROSA,
-		LARANJA
+		LARANJA,
+		BRANCO,
+		ROXO,
+		DOURADO,
+		PRATA
 	}
 	
 	@Id
@@ -46,10 +53,20 @@ public class Item {
 	private Cor cor;
 	
 	@Column
-	private String diaPerda;
+	private LocalDate dataPerda;
 	
 	@Column
 	private String nome;
+	
+	@Column
+	private String desc1;
+	
+	@Column
+	private String desc2;
+	
+	@Column
+	private String desc3;
+	
 
 	public Long getId() {
 		return id;
@@ -75,12 +92,12 @@ public class Item {
 		this.cor = cor;
 	}
 
-	public String getDiaPerda() {
-		return diaPerda;
+	public LocalDate getDataPerda() {
+		return dataPerda;
 	}
 
-	public void setDiaPerda(String diaPerda) {
-		this.diaPerda = diaPerda;
+	public void setDataPerda(LocalDate dataPerda) {
+		this.dataPerda = dataPerda;
 	}
 	
 	public String getNome() {
@@ -91,9 +108,33 @@ public class Item {
 		this.nome = nome;
 	}
 
+	public String getDesc1() {
+		return desc1;
+	}
+
+	public void setDesc1(String desc1) {
+		this.desc1 = desc1;
+	}
+
+	public String getDesc2() {
+		return desc2;
+	}
+
+	public void setDesc2(String desc2) {
+		this.desc2 = desc2;
+	}
+
+	public String getDesc3() {
+		return desc3;
+	}
+
+	public void setDesc3(String desc3) {
+		this.desc3 = desc3;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cor, diaPerda, id, tipoObjeto);
+		return Objects.hash(cor, dataPerda, desc1, desc2, desc3, id, nome, tipoObjeto);
 	}
 
 	@Override
@@ -105,9 +146,10 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		return cor == other.cor && Objects.equals(diaPerda, other.diaPerda) && Objects.equals(id, other.id)
-				&& tipoObjeto == other.tipoObjeto;
+		return cor == other.cor && Objects.equals(dataPerda, other.dataPerda) && Objects.equals(desc1, other.desc1)
+				&& Objects.equals(desc2, other.desc2) && Objects.equals(desc3, other.desc3)
+				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && tipoObjeto == other.tipoObjeto;
 	}
-	
+
 	
 }
