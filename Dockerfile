@@ -1,27 +1,12 @@
-# Use the official Maven image to build the application
-FROM maven:4.0-openjdk-21 as build
-
-# Set the working directory
+# Etapa de build usando Maven
+FROM maven:3.9-openjdk-21 as build
 WORKDIR /app
+COPY . /app
+RUN mvn clean install
 
-# Copy the pom.xml and the src folder into the container
-COPY pom.xml .
-COPY src /app/src
-
-# Build the application
-RUN mvn clean package -DskipTests
-
-# Use the official OpenJDK 21 image to run the application
+# Etapa de execução com OpenJDK
 FROM openjdk:21-jdk-slim
-
-# Set the working directory
 WORKDIR /app
-
-# Copy the jar file from the build image
-COPY --from=build /app/target/*.jar /app/app.jar
-
-# Expose the port the application will run on
+COPY --from=build /app/target/backend-achados-e-perdidos-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# Command to run the application
-CMD ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "app.jar"]
