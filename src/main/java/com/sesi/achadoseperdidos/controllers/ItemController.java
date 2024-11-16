@@ -3,8 +3,11 @@ package com.sesi.achadoseperdidos.controllers;
 import java.util.List;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,5 +41,11 @@ public class ItemController {
 			produces= MediaType.APPLICATION_JSON_VALUE)
 	public Item cadastro(@RequestBody Item item){
 		return service.cadastro(item);				
+	}
+	
+	@DeleteMapping(value = "{/id}")
+	public ResponseEntity<?> deletar(@PathVariable(value = "id")Long id){
+		service.deletar(id);
+		return ResponseEntity.noContent().build();				
 	}
 }

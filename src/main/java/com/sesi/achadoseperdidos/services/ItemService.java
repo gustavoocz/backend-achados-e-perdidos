@@ -26,4 +26,11 @@ public class ItemService {
 	public Item cadastro(Item item) {
 		return repository.save(item);
 	}
+	
+	public void deletar(Long id) {
+		
+		var entity = repository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Item não encontrado"));
+		repository.delete(entity);
+	}
 }
