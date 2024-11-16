@@ -1,12 +1,15 @@
-# Etapa de build usando Maven
-FROM maven:3.9-openjdk-21 as build
-WORKDIR /app
-COPY . /app
-RUN mvn clean install
-
-# Etapa de execução com OpenJDK
+# Use uma imagem oficial do OpenJDK 21 como base
 FROM openjdk:21-jdk-slim
+
+# Diretório de trabalho dentro do container
 WORKDIR /app
-COPY --from=build /app/target/backend-achados-e-perdidos-0.0.1-SNAPSHOT.jar app.jar
+
+# Copie o arquivo jar da aplicação para o container
+COPY target/backend-achados-e-perdidos-0.0.1-SNAPSHOT.jar app.jar
+
+# Comando para rodar a aplicação Java
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Exponha a porta que a aplicação vai rodar (se necessário)
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+
