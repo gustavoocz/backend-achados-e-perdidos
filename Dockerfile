@@ -1,17 +1,13 @@
-FROM ubuntu:latest AS build
+FROM eclipse-temurin:21-jdk-jammy
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY . .
+# Define o diretório de trabalho dentro do contêiner
+WORKDIR /app
 
-RUN apt-get install maven -y
-RUN mvn clean package -DskipTests
+# Copia o arquivo JAR da aplicação para o contêiner
+COPY target/trabalho-achados-e-perdidos-0.0.1-SNAPSHOT.jar app.jar
 
-
-FROM openjdk:17-jdk-slim
-
+# Expõe a porta que a aplicação usa
 EXPOSE 8080
 
-COPY --from=build /target/deploy_render-1.0.0.jar app.jar
-
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+# Comando para executar a aplicação
+CMD ["java", "-jar", "app.jar"]
