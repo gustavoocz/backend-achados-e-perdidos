@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:mysql://mysql-bdtcc.alwaysdata.net:3306/bdtcc_achadoseperdidos
+    username: bdtcc 
+    password: _VRwe3r2S.yBEki 
   jpa:
     open-in-view: false
     hibernate:
