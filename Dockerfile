@@ -1,8 +1,8 @@
 # Etapa de build
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY . .
+RUN apt-get update && apt-get install maven -y
 RUN mvn clean package -DskipTests
 
 # Etapa de execução
