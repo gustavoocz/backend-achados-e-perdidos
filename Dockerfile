@@ -1,40 +1,27 @@
-# Estágio de compilação
-FROM maven:4.0.0-alpha-12-amazoncorretto-21 AS build
+# Use the official Maven image to build the application
+FROM maven:4.0-openjdk-21 as build
+
+# Set the working directory
 WORKDIR /app
 
-# Copia apenas o pom.xml primeiro para cachear as dependências
+# Copy the pom.xml and the src folder into the container
 COPY pom.xml .
+COPY src /app/src
 
-# Download das dependências
-RUN mvn dependency:go-offline
-
-# Copia o código fonte
-COPY src ./src
-
-# Compila a aplicação
+# Build the application
 RUN mvn clean package -DskipTests
 
-# Estágio de execução
-FROM amazoncorretto:21-alpine-jdk
+# Use the official OpenJDK 21 image to run the application
+FROM openjdk:21-jdk-slim
+
+# Set the working directory
 WORKDIR /app
 
-# Cria um usuário não-root
-RUN addgroup -S spring && adduser -S spring -G spring
+# Copy the jar file from the build image
+COPY --from=build /app/target/*.jar /app/app.jar
 
-# Copia o jar construído do estágio de build
-COPY --from=build /app/target/*.jar app.jar
-
-# Define a propriedade para o usuário não-root
-RUN chown spring:spring app.jar
-
-# Muda para o usuário não-root
-USER spring
-
-# Adiciona configuração JVM para contêineres
-ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
-
-# Define o ponto de entrada com opções Java configuráveis
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
-
-# Expõe a porta padrão do Spring Boot
+# Expose the port the application will run on
 EXPOSE 8080
+
+# Command to run the application
+CMD ["java", "-jar", "/app/app.jar"]
