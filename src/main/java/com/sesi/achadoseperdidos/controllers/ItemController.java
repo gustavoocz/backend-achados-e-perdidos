@@ -43,7 +43,7 @@ public class ItemController {
 		return service.cadastro(item);				
 	}
 	
-	@DeleteMapping(value = "{/id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> deletar(@PathVariable(value = "id")Long id){
 		service.deletar(id);
 		return ResponseEntity.noContent().build();				
